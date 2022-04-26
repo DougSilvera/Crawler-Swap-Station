@@ -22,6 +22,7 @@ GO
 
 CREATE TABLE [User] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
+  [FirebaseUserId] nvarchar(255) NOT NULL,
   [DisplayName] nvarchar(255) NOT NULL,
   [FirstName] nvarchar(255) NOT NULL,
   [LastName] nvarchar(255) NOT NULL,
