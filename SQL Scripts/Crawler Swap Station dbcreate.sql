@@ -1,6 +1,6 @@
 USE [master]
 
-IF db_id('CrawlerSwapStation') IS NULl
+IF db_id('CrawlerSwapStation') IS NULL
   CREATE DATABASE [CrawlerSwapStation]
 GO
 
@@ -20,7 +20,7 @@ GO
 
 
 
-CREATE TABLE [User] (
+CREATE TABLE [UserProfile] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [FirebaseUserId] nvarchar(255) NOT NULL,
   [DisplayName] nvarchar(255) NOT NULL,
@@ -37,6 +37,7 @@ CREATE TABLE [Listing] (
   [DateCreated] datetime NOT NULL,
   [Title] nvarchar(255) NOT NULL,
   [Body] nvarchar(255) NOT NULL,
+  [Price] int NOT NULL,
   [ScaleId] int,
   [VehicleId] int
 )
@@ -73,7 +74,7 @@ GO
 CREATE TABLE [UserFollow] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [UserId] int NOT NULL,
-  [FollowingId] int NOT NULL
+  [FollowingId] int
 )
 GO
 
@@ -84,7 +85,7 @@ CREATE TABLE [Image] (
 )
 GO
 
-ALTER TABLE [Listing] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+ALTER TABLE [Listing] ADD FOREIGN KEY ([UserId]) REFERENCES [UserProfile] ([Id]) ON DELETE CASCADE
 GO
 
 ALTER TABLE [Listing] ADD FOREIGN KEY ([ScaleId]) REFERENCES [Scale] ([Id]) ON DELETE SET NULL
@@ -96,19 +97,19 @@ GO
 ALTER TABLE [UserFavorite] ADD FOREIGN KEY ([ListingId]) REFERENCES [Listing] ([Id]) ON DELETE CASCADE
 GO
 
-ALTER TABLE [UserFavorite] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+ALTER TABLE [UserFavorite] ADD FOREIGN KEY ([UserId]) REFERENCES [UserProfile] ([Id])
 GO
 
-ALTER TABLE [Message] ADD FOREIGN KEY ([SenderId]) REFERENCES [User] ([Id])
+ALTER TABLE [Message] ADD FOREIGN KEY ([SenderId]) REFERENCES [UserProfile] ([Id])
 GO
 
-ALTER TABLE [Message] ADD FOREIGN KEY ([RecipientId]) REFERENCES [User] ([Id]) ON DELETE SET NULL
+ALTER TABLE [Message] ADD FOREIGN KEY ([RecipientId]) REFERENCES [UserProfile] ([Id]) ON DELETE SET NULL
 GO
 
-ALTER TABLE [UserFollow] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+ALTER TABLE [UserFollow] ADD FOREIGN KEY ([UserId]) REFERENCES [UserProfile] ([Id]) ON DELETE CASCADE
 GO
 
-ALTER TABLE [UserFollow] ADD FOREIGN KEY ([FollowingId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+ALTER TABLE [UserFollow] ADD FOREIGN KEY ([FollowingId]) REFERENCES [UserProfile] ([Id])
 GO
 
 ALTER TABLE [Image] ADD FOREIGN KEY ([ListingId]) REFERENCES [Listing] ([Id]) ON DELETE CASCADE
