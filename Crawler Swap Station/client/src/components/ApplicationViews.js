@@ -1,6 +1,7 @@
 import React from "react";
 import {Switch, Route, Redirect} from "react-router-dom"  
 import Home from "./Home";
+import ListingDetail from "./listings/listingDetails";
 import MarketPlace from "./listings/listingList";
 import Login from "./Login";
 import Register from "./Register";
@@ -16,6 +17,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/marketplace" exact>
           {isLoggedIn ? <MarketPlace /> : <Redirect to="/login" />}
+        </Route>
+        
+        <Route path="/marketplace/listingDetail/:id" exact>
+          {isLoggedIn ? <ListingDetail /> : <Redirect to="/login" />}
         </Route>
         
         <Route path="/login">
