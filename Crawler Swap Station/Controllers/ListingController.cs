@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +7,7 @@ using Crawler_Swap_Station.Repositories;
 
 namespace Crawler_Swap_Station.Controllers
 {
-   
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ListingController : ControllerBase
@@ -34,6 +33,9 @@ namespace Crawler_Swap_Station.Controllers
         [HttpPost]
         public IActionResult Post(Listing listing)
         {
+            UserProfile user = GetCurrentUserProfile();
+            listing.UserId = user.Id;
+            listing.DateCreated = DateTime.Now;
             _listingRepository.AddListing(listing);
             return Ok(listing);
         }
@@ -59,6 +61,11 @@ namespace Crawler_Swap_Station.Controllers
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _profileRepository.GetByFirebaseUserId(firebaseUserId);
+        }
+        private string GetCurrentUserProfileId()
+        {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return id;
         }
     }
 }

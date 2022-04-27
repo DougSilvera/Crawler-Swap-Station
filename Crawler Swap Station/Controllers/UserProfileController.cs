@@ -7,7 +7,6 @@ using Crawler_Swap_Station.Repositories;
 
 namespace Crawler_Swap_Station.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
