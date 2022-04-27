@@ -24,7 +24,7 @@ export default function Header({ isLoggedIn }) {
     <div>
       <Navbar color="light" light expand="md">
         <NavbarBrand tag={RRNavLink} to="/">
-          Tabloid
+          Crawler Swap Station
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -33,8 +33,13 @@ export default function Header({ isLoggedIn }) {
             {isLoggedIn && (
               <>
                 <NavItem>
-                  <NavLink tag={RRNavLink} to="/">
-                    Home
+                  <NavLink tag={RRNavLink} to="/marketplace">
+                    Marketplace
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/profile/:id">
+                    Profile
                   </NavLink>
                 </NavItem>
                 
@@ -50,6 +55,7 @@ export default function Header({ isLoggedIn }) {
                     className="nav-link"
                     style={{ cursor: "pointer" }}
                     onClick={handleLogout}
+                    href="/"
                   >
                     Logout
                   </a>
