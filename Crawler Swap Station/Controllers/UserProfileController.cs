@@ -6,7 +6,7 @@ using Crawler_Swap_Station.Repositories;
 
 namespace Crawler_Swap_Station.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase

@@ -2,6 +2,7 @@
 using Crawler_Swap_Station.Utils;
 using Microsoft.Extensions.Configuration;
 
+
 namespace Crawler_Swap_Station.Repositories
 {
     public class UserProfileRepository : BaseRepository, IUserProfileRepository
