@@ -93,25 +93,20 @@ namespace Crawler_Swap_Station.Repositories
                                                      DateCreated,
                                                      Title,
                                                      Body,
-                                                     Price,
-                                                     ScaleId,
-                                                     VehicleId)
+                                                     Price)
                                         OUTPUT INSERTED.ID
                                         VALUES 
                                                      (@UserId, 
                                                       @DateCreated, 
                                                       @Title,
                                                       @Body,
-                                                      @Price,
-                                                      @ScaleId,
-                                                      @VehicleId);";
+                                                      @Price);";
                     DbUtils.AddParameter(cmd, "@UserId", listing.UserId);
                     DbUtils.AddParameter(cmd, "@DateCreated", listing.DateCreated);
                     DbUtils.AddParameter(cmd, "@Title", listing.Title);
                     DbUtils.AddParameter(cmd, "@Body", listing.Body);
                     DbUtils.AddParameter(cmd, "@Price", listing.Price);
-                    DbUtils.AddParameter(cmd, "@ScaleId", listing.ScaleId);
-                    DbUtils.AddParameter(cmd, "@VehicleId", listing.VehicleId);
+                    
 
                     listing.Id = (int)cmd.ExecuteScalar();
                 }
@@ -129,16 +124,13 @@ namespace Crawler_Swap_Station.Repositories
                                             DateCreated = @DateCreated,
                                             Title = @Title,
                                             Body = @Body,
-                                            Price = @Price,
-                                            ScaleId = @ScaleId
+                                            Price = @Price
                                         WHERE Id = @id;";
                     DbUtils.AddParameter(cmd, "@UserId", listing.UserId);
                     DbUtils.AddParameter(cmd, "@DateCreated", listing.DateCreated);
                     DbUtils.AddParameter(cmd, "@Title", listing.Title);
                     DbUtils.AddParameter(cmd, "@Body", listing.Body);
                     DbUtils.AddParameter(cmd, "@Price", listing.Price);
-                    DbUtils.AddParameter(cmd, "@ScaleId", listing.ScaleId);
-                    DbUtils.AddParameter(cmd, "@VehicleId", listing.VehicleId);
                     DbUtils.AddParameter(cmd, "@id", listing.Id);
 
                     cmd.ExecuteNonQuery();
@@ -171,9 +163,17 @@ namespace Crawler_Swap_Station.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Id, UserId, DateCreated, Title, Body, Price FROM Listing ORDER BY DateCreated DESC WHERE Title LIKE @Criterion OR Body LIKE @Criterion;";
+                    cmd.CommandText = @"SELECT Id, 
+                                               UserId, 
+                                               DateCreated, 
+                                               Title, 
+                                               Body, 
+                                               Price 
+                                        FROM Listing    
+                                        WHERE Title LIKE @Criterion OR Body LIKE @Criterion 
+                                        ORDER BY DateCreated DESC;";
 
-                    DbUtils.AddParameter(cmd, "@Criterion", criterion);
+                    DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
                     List<Listing> listings = new List<Listing>();
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
