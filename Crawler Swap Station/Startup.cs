@@ -16,60 +16,62 @@ namespace Crawler_Swap_Station
         {
             Configuration = configuration;
         }
-
+        
+            
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
-            services.AddTransient<IListingRepository, ListingRepository>();
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+        services.AddTransient<IListingRepository, ListingRepository>();
 
-            var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
-            var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
-            services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = googleTokenUrl;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = googleTokenUrl,
-                        ValidateAudience = true,
-                        ValidAudience = firebaseProjectId,
-                        ValidateLifetime = true
-                    };
-                });
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+        var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
+        var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Crawler_Swap_Station", Version = "v1" });
-
-                var securitySchema = new OpenApiSecurityScheme
+                options.Authority = googleTokenUrl;
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    Name = "Authorization",
-                    BearerFormat = "JWT",
-                    Description = "JWT Authorization header using the Bearer scheme.",
-                    Type = SecuritySchemeType.ApiKey,
-                    In = ParameterLocation.Header,
-                    Reference = new OpenApiReference
-                    {
-                        Id = "Bearer",
-                        Type = ReferenceType.SecurityScheme,
-                    }
+                    ValidateIssuer = true,
+                    ValidIssuer = googleTokenUrl,
+                    ValidateAudience = true,
+                    ValidAudience = firebaseProjectId,
+                    ValidateLifetime = true
                 };
+            });
 
-                c.AddSecurityDefinition("Bearer", securitySchema);
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        services.AddControllers();
+
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Crawler_Swap_Station", Version = "v1" });
+
+            var securitySchema = new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                BearerFormat = "JWT",
+                Description = "JWT Authorization header using the Bearer scheme.",
+                Type = SecuritySchemeType.ApiKey,
+                In = ParameterLocation.Header,
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme,
+                }
+            };
+
+            c.AddSecurityDefinition("Bearer", securitySchema);
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     { securitySchema, new[] { "Bearer"} }
                 });
-            });
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        });
+    }
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -82,7 +84,16 @@ namespace Crawler_Swap_Station
 
             app.UseRouting();
 
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
+
 
             app.UseEndpoints(endpoints =>
             {
