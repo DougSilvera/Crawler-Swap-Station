@@ -110,5 +110,21 @@ export const getAllListings = () => {
       });
     });
   };
+  export const SearchListings = (query) => {
+    return getToken().then((token) => {
+      return fetch(`${_apiUrl}/search?q=${query}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error("An error occurred retrieving listings");
+        }
+      });
+    });
+  };
   
   
