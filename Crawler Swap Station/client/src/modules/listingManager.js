@@ -94,5 +94,21 @@ export const getAllListings = () => {
       });
     });
   };
+  export const deleteListing = (id) => {
+    return getToken().then((token) => {
+      return fetch(`${_apiUrl}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.ok;
+        } else {
+          throw new Error("An error occurred deleting listing");
+        }
+      });
+    });
+  };
   
   
