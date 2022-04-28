@@ -34,6 +34,22 @@ export const getAllListings = () => {
       });
     });
   };
+  export const getShortListingById = (id) => {
+    return getToken().then((token) => {
+      return fetch(`${_apiUrl}/listingShort/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error("An error occurred retrieving listing");
+        }
+      });
+    });
+  };
   export const addListing = (listing) => {
     return getToken().then((token) => {
       return fetch(_apiUrl, {
@@ -56,4 +72,27 @@ export const getAllListings = () => {
       });
     });
   };
+  export const updateListing = (listing) => {
+    return getToken().then((token) => {
+      return fetch(`${_apiUrl}/${listing.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(listing),
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.json();
+        } else if (resp.status === 401) {
+          throw new Error("Unauthorized");
+        } else {
+          throw new Error(
+            "An unknown error occurred while trying to save changes to listing."
+          );
+        }
+      });
+    });
+  };
+  
   

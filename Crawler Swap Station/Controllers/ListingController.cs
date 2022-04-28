@@ -25,10 +25,15 @@ namespace Crawler_Swap_Station.Controllers
         {
             return Ok(_listingRepository.GetAllListings());
         }
+        [HttpGet("listingShort/{id}")]
+        public IActionResult GetShortListing(int id)
+        {
+            return Ok(_listingRepository.GetListingById(id));
+        }
         [HttpGet("{id}")]
         public IActionResult GetListingById(int id)
         {
-            return Ok(_listingRepository.GetListingById(id));
+            return Ok(_listingRepository.GetListingAndUserById(id));
         }
         [HttpPost]
         public IActionResult Post(Listing listing)
