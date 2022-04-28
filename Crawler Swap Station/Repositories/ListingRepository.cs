@@ -38,7 +38,7 @@ namespace Crawler_Swap_Station.Repositories
                 }
             }
         }
-        public Listing GetListingById(int id)
+        public Listing GetListingAndUserById(int id)
         {
             using (var conn = Connection)
             {
@@ -81,6 +81,43 @@ namespace Crawler_Swap_Station.Repositories
             }
         }
 
+        public Listing GetListingById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, 
+                                               UserId, 
+                                               DateCreated, 
+                                               Title, 
+                                               Body, 
+                                               Price
+                                       FROM Listing 
+                                       WHERE Id= @id;";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    Listing listing = null;
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        listing = new Listing()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            UserId = DbUtils.GetInt(reader, "UserId"),
+                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                            Title = DbUtils.GetString(reader, "Title"),
+                            Body = DbUtils.GetString(reader, "Body"),
+                            Price = DbUtils.GetInt(reader, "Price"),
+                            
+                        };
+                    }
+                    conn.Close();
+                    return listing;
+                }
+            }
+        }
         public void AddListing(Listing listing)
         {
             using (var conn = Connection)

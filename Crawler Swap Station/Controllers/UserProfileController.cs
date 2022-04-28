@@ -16,7 +16,7 @@ namespace Crawler_Swap_Station.Controllers
         {
             _userProfileRepository = userProfileRepository;
         }
-
+        [Authorize]
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {

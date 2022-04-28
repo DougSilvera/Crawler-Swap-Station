@@ -6,6 +6,7 @@ namespace Crawler_Swap_Station.Repositories
     public interface IListingRepository
     {
         public List<Listing> GetAllListings(); 
+        public Listing GetListingAndUserById(int id);
         public Listing GetListingById(int id);
         public void AddListing(Listing listing);
         public void UpdateListing(Listing listing);
