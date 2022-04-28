@@ -25,6 +25,7 @@ namespace Crawler_Swap_Station
     {
         services.AddTransient<IUserProfileRepository, UserProfileRepository>();
         services.AddTransient<IListingRepository, ListingRepository>();
+        services.AddTransient<IFavoriteRepository, FavoriteRepository>();
 
         var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
         var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";

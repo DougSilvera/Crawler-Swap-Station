@@ -231,6 +231,34 @@ namespace Crawler_Swap_Station.Repositories
                 }
             }
         }
+        public Favorite GetFavoriteListingIdsByUserId(int userId, int listingId )
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, UserId, ListingId 
+                                       FROM UserFavorite
+                                       WHERE UserId = @id AND ListingId = @listingid;";
 
+                    DbUtils.AddParameter(cmd, "@id", userId);
+                    DbUtils.AddParameter(cmd, "@listingId", listingId);
+                    Favorite favorite = null;
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        favorite = new Favorite()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            UserId = DbUtils.GetInt(reader, "UserId"),
+                            ListingId = DbUtils.GetInt(reader, "ListingId")
+                        };
+                    }
+                    reader.Close();
+                    return favorite;
+                }
+            }
+        }
     }
 }
