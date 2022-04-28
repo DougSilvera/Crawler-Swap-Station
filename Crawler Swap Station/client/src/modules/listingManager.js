@@ -126,5 +126,24 @@ export const getAllListings = () => {
       });
     });
   };
-  
+  export const getUserFavoriteListing = (listingId) => {
+    return getToken().then((token) => {
+      return fetch(`${_apiUrl}/favorites/${listingId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          if (resp.status === 200) {
+            return resp.json();
+          } else if (resp.status === 204) {
+            return []
+          }
+        } else {
+          throw new Error("An error occurred retrieving user favorites");
+        }
+      });
+    });
+  };
   

@@ -9,13 +9,20 @@ import {
   CardTitle,
   Alert,
 } from "reactstrap";
-import { getListingById } from "../../modules/listingManager";
+import {
+  getListingById,
+  getUserFavoriteListing,
+} from "../../modules/listingManager";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { getByFireId } from "../../modules/authManager";
 import { Link } from "react-router-dom";
 import { deleteListing } from "../../modules/listingManager";
 import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-regular-svg-icons";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
+import { addFavorite, deleteFavorite } from "../../modules/favoriteManager";
 
 const ListingDetail = () => {
   const history = useHistory();
@@ -23,17 +30,27 @@ const ListingDetail = () => {
   const [listing, setListing] = useState({});
   const [userProfile, setUserProfile] = useState({});
   const { id } = useParams();
+  const [userFavorite, setUserFavorite] = useState({});
+  const [render, setRender] = useState(1);
   const currentUser = firebase.auth().currentUser;
+
   const getListing = (listingId) => {
     getListingById(listingId).then((l) => setListing(l));
   };
+
+  const getUserFavorites = (listingId) => {
+    getUserFavoriteListing(listingId).then((d) => setUserFavorite(d));
+  };
+
   const getUserLoggedIn = (uid) => {
     getByFireId(uid).then((d) => setUserProfile(d));
   };
+
   useEffect(() => {
     getUserLoggedIn(currentUser.uid);
     getListing(id);
-  }, [currentUser.uid, id]);
+    getUserFavorites(id);
+  }, [currentUser.uid, id, render]);
 
   const displayButtons = (userId, listingUserId, listingId) => {
     if (userId === listingUserId) {
@@ -53,6 +70,7 @@ const ListingDetail = () => {
       );
     }
   };
+
   const handleDelete = (evt) => {
     evt.preventDefault();
     deleteListing(id).then(() => {
@@ -83,12 +101,51 @@ const ListingDetail = () => {
       return <div></div>;
     }
   };
+  const handleAddFavorite = (evt) => {
+    evt.preventDefault();
+    addFavorite(evt.target.id).then(() => {
+      setRender(render + 1);
+    });
+  };
 
+  const handleRemoveFavorite = (evt) => {
+    evt.preventDefault();
+    deleteFavorite(userFavorite.id).then(() => {
+      setRender(render + 2);
+    });
+  };
+  const favoriteDisplay = (favorite) => {
+    if (favorite.listingId === listing.id) {
+      return (
+        <div>
+          <FontAwesomeIcon
+            size="3x"
+            onClick={handleRemoveFavorite}
+            value={favorite.id}
+            icon={solidStar}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <FontAwesomeIcon
+            id={listing.id}
+            value={favorite.id}
+            onClick={handleAddFavorite}
+            size="3x"
+            icon={faStar}
+          />
+        </div>
+      );
+    }
+  };
   return (
     <div>
       {deleteAlertBox()}
       <Card style={{ width: "%80" }}>
         <CardBody>
+          {favoriteDisplay(userFavorite)}
           <CardTitle>{listing.title}</CardTitle>
           <CardSubtitle>${listing.price}</CardSubtitle>
           <CardSubtitle>
@@ -96,6 +153,7 @@ const ListingDetail = () => {
           </CardSubtitle>
           <CardSubtitle>Date Listed: {listing.dateCreated}</CardSubtitle>
           <CardText>{listing.body}</CardText>
+
           {displayButtons(userProfile.id, listing.userId, listing.id)}
         </CardBody>
       </Card>

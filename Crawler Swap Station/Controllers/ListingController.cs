@@ -62,15 +62,16 @@ namespace Crawler_Swap_Station.Controllers
         {
             return Ok(_listingRepository.Search(q));
         }
+        [HttpGet("favorites/{listingId}")]
+        public IActionResult GetUserFavorites(int listingId)
+        {
+            UserProfile profile = GetCurrentUserProfile();
+            return Ok(_listingRepository.GetFavoriteListingIdsByUserId(profile.Id, listingId));
+        }
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _profileRepository.GetByFirebaseUserId(firebaseUserId);
-        }
-        private string GetCurrentUserProfileId()
-        {
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return id;
         }
     }
 }
