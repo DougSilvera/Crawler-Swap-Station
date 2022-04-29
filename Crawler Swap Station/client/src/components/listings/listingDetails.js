@@ -30,7 +30,7 @@ const ListingDetail = () => {
   const [listing, setListing] = useState({});
   const [userProfile, setUserProfile] = useState({});
   const { id } = useParams();
-  const [userFavorite, setUserFavorite] = useState({});
+  const [userFavorite, setUserFavorite] = useState(null);
   const [render, setRender] = useState(1);
   const currentUser = firebase.auth().currentUser;
 
@@ -115,7 +115,9 @@ const ListingDetail = () => {
     });
   };
   const favoriteDisplay = (favorite) => {
-    if (favorite.listingId === listing.id) {
+    if (favorite === null) {
+      return null
+    } else if (favorite.listingId === listing.id) {
       return (
         <div>
           <FontAwesomeIcon
