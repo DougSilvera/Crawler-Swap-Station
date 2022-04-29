@@ -38,6 +38,12 @@ namespace Crawler_Swap_Station.Controllers
             _favoriteRepository.DeleteFavorite(id);
             return Ok();
         }
+        [HttpGet("userfavorites")]
+        public IActionResult GetUserFavorites()
+        {
+            UserProfile userProfile = GetCurrentUserProfile();
+            return Ok(_favoriteRepository.GetFavoriteListingsByUserId(userProfile.Id));
+        }
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

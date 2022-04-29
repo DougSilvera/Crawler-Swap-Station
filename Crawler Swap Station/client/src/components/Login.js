@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useHistory, Link } from "react-router-dom";
 import { login } from "../modules/authManager";
 
@@ -21,11 +21,20 @@ export default function Login() {
       <fieldset>
         <FormGroup>
           <Label for="email">Email</Label>
-          <Input id="email" type="text" autoFocus onChange={e => setEmail(e.target.value)} />
+          <Input
+            id="email"
+            type="text"
+            autoFocus
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </FormGroup>
         <FormGroup>
           <Label for="password">Password</Label>
-          <Input id="password" type="password" onChange={e => setPassword(e.target.value)} />
+          <Input
+            id="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </FormGroup>
         <FormGroup>
           <Button>Login</Button>

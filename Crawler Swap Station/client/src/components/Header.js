@@ -41,7 +41,6 @@ export default function Header({ isLoggedIn }) {
                     Profile
                   </NavLink>
                 </NavItem>
-                
               </>
             )}
           </Nav>
