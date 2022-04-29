@@ -14,7 +14,7 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
 
   const handleAddFavorite = (evt) => {
     evt.preventDefault();
-    addFavorite(evt.target.id).then(() => {
+    addFavorite(listing.id).then(() => {
       setRender(render + 1);
     });
   };
@@ -37,7 +37,7 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
       return (
         <div>
           <FontAwesomeIcon
-            id={listing.id}
+            
             onClick={handleAddFavorite}
             icon={faStar}
           />
