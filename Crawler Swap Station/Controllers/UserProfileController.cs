@@ -7,6 +7,7 @@ using Crawler_Swap_Station.Repositories;
 
 namespace Crawler_Swap_Station.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -16,7 +17,7 @@ namespace Crawler_Swap_Station.Controllers
         {
             _userProfileRepository = userProfileRepository;
         }
-        [Authorize]
+        
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
