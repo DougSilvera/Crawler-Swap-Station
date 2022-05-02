@@ -260,5 +260,42 @@ namespace Crawler_Swap_Station.Repositories
                 }
             }
         }
+        public List<Listing> GetListingsByUserId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, 
+                                               UserId, 
+                                               DateCreated, 
+                                               Title, 
+                                               Body, 
+                                               Price 
+                                       FROM Listing 
+                                       WHERE UserId= @id
+                                       ORDER BY DateCreated DESC;";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    List<Listing> listings = new List<Listing>();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        listings.Add(new Listing()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            UserId = DbUtils.GetInt(reader, "UserId"),
+                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                            Title = DbUtils.GetString(reader, "Title"),
+                            Body = DbUtils.GetString(reader, "Body"),
+                            Price = DbUtils.GetInt(reader, "Price")
+                        });
+                    }
+                    conn.Close();
+                    return listings;
+                }
+            }
+        }
     }
 }

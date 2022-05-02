@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Crawler_Swap_Station.Models;
 using Crawler_Swap_Station.Repositories;
+using System.Collections.Generic;
 
 namespace Crawler_Swap_Station.Controllers
 {
@@ -14,11 +15,13 @@ namespace Crawler_Swap_Station.Controllers
     {
         private readonly IListingRepository _listingRepository;
         private readonly IUserProfileRepository _profileRepository;
+        private readonly IFavoriteRepository _favoriteRepository;
 
-        public ListingController(IListingRepository listingRepository, IUserProfileRepository userProfileRepository)
+        public ListingController(IListingRepository listingRepository, IUserProfileRepository userProfileRepository, IFavoriteRepository favoriteRepository)
         {
             _listingRepository = listingRepository;
             _profileRepository = userProfileRepository;
+            _favoriteRepository = favoriteRepository;
         }
         [HttpGet]
         public IActionResult GetAllListings()
@@ -67,6 +70,24 @@ namespace Crawler_Swap_Station.Controllers
         {
             UserProfile profile = GetCurrentUserProfile();
             return Ok(_listingRepository.GetFavoriteListingIdsByUserId(profile.Id, listingId));
+        }
+        [HttpGet("getUserListings")]
+        public IActionResult GetUserListings()
+        {
+            UserProfile userProfile = GetCurrentUserProfile();
+            return Ok(_listingRepository.GetListingsByUserId(userProfile.Id));
+        }
+        [HttpGet("userFavoriteListings")]
+        public IActionResult GetUserFavoriteListings()
+        {
+            UserProfile userprofile = GetCurrentUserProfile();
+            List<Favorite> userFavorites = _favoriteRepository.GetFavoriteListingsByUserId(userprofile.Id);
+            List<Listing> userFavoriteListings = new List<Listing>(); 
+            foreach (Favorite favorite in userFavorites)
+            {
+                userFavoriteListings.Add(_listingRepository.GetListingAndUserById(favorite.ListingId));
+            }
+            return Ok(userFavoriteListings);
         }
         private UserProfile GetCurrentUserProfile()
         {

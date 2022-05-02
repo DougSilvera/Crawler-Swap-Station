@@ -37,7 +37,7 @@ export default function Header({ isLoggedIn }) {
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={RRNavLink} to="/profile/:id">
+                  <NavLink tag={RRNavLink} to="/profile">
                     Profile
                   </NavLink>
                 </NavItem>
