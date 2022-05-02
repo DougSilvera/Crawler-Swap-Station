@@ -125,7 +125,7 @@ export const onLoginStatusChange = (onLoginStatusChangedHandler) => {
 };
 export const getLoggedInUserProfile = () => {
   return getToken().then((token) => {
-    return fetch(`${_apiUrl}/loggedInUser}`, {
+    return fetch(`${_apiUrl}/loggedInUser`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

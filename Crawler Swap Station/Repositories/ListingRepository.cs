@@ -274,10 +274,11 @@ namespace Crawler_Swap_Station.Repositories
                                                Body, 
                                                Price 
                                        FROM Listing 
-                                       WHERE UserId= @id;";
+                                       WHERE UserId= @id
+                                       ORDER BY DateCreated DESC;";
 
                     DbUtils.AddParameter(cmd, "@id", id);
-                    List<Listing> listings = null;
+                    List<Listing> listings = new List<Listing>();
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {

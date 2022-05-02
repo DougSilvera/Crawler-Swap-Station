@@ -7,6 +7,7 @@ import ListingForm from "./listings/listingForm";
 import MarketPlace from "./listings/listingList";
 import Login from "./Login";
 import Register from "./Register";
+import ProfileInfo from "./users/profileInfo";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -30,6 +31,9 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/marketplace/edit/:id(\d+)" exact>
           {isLoggedIn ? <ListingEdit /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/profile" exact>
+          {isLoggedIn ? <ProfileInfo /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">

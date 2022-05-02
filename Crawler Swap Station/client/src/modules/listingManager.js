@@ -148,7 +148,7 @@ export const getUserFavoriteListing = (listingId) => {
 };
 export const getAllUserListings = () => {
   return getToken().then((token) => {
-    return fetch(`${_apiUrl}/getUserListings}`, {
+    return fetch(`${_apiUrl}/getUserListings`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -166,7 +166,7 @@ export const getAllUserListings = () => {
 };
 export const getLoggedInUserFavoriteListings = () => {
   return getToken().then((token) => {
-    return fetch(`${_apiUrl}/userFavoriteListings}`, {
+    return fetch(`${_apiUrl}/userFavoriteListings`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

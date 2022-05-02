@@ -85,7 +85,7 @@ namespace Crawler_Swap_Station.Controllers
             List<Listing> userFavoriteListings = new List<Listing>(); 
             foreach (Favorite favorite in userFavorites)
             {
-                userFavoriteListings.Add(_listingRepository.GetListingById(favorite.ListingId));
+                userFavoriteListings.Add(_listingRepository.GetListingAndUserById(favorite.ListingId));
             }
             return Ok(userFavoriteListings);
         }
