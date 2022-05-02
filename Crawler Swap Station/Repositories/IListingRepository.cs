@@ -13,5 +13,6 @@ namespace Crawler_Swap_Station.Repositories
         public void DeleteListing(int id);
         public List<Listing> Search(string criterion);
         public Favorite GetFavoriteListingIdsByUserId(int userId, int listingId);
+        public List<Listing> GetListingsByUserId(int id);
     }
 }

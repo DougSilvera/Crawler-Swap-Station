@@ -146,3 +146,39 @@ export const getUserFavoriteListing = (listingId) => {
     });
   });
 };
+export const getAllUserListings = () => {
+  return getToken().then((token) => {
+    return fetch(`${_apiUrl}/getUserListings}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else if (resp.status === 204) {
+        return [];
+      } else {
+        throw new Error("An error occurred retrieving listings");
+      }
+    });
+  });
+};
+export const getLoggedInUserFavoriteListings = () => {
+  return getToken().then((token) => {
+    return fetch(`${_apiUrl}/userFavoriteListings}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else if (resp.status === 204) {
+        return [];
+      } else {
+        throw new Error("An error occurred retrieving listings");
+      }
+    });
+  });
+};

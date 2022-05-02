@@ -123,3 +123,21 @@ export const onLoginStatusChange = (onLoginStatusChangedHandler) => {
   // Save the callback so we can call it in the `login` and `register` functions.
   _onLoginStatusChangedHandler = onLoginStatusChangedHandler;
 };
+export const getLoggedInUserProfile = () => {
+  return getToken().then((token) => {
+    return fetch(`${_apiUrl}/loggedInUser}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else if (resp.status === 204) {
+        return [];
+      } else {
+        throw new Error("An error occurred retrieving listings");
+      }
+    });
+  });
+};
