@@ -53,7 +53,9 @@ const ListingDetail = () => {
   }, [currentUser.uid, id, render]);
 
   const displayButtons = (userId, listingUserId, listingId) => {
-    if (userId === listingUserId) {
+    if (userFavorite === null) {
+      return null
+    } else if (userId === listingUserId) {
       return (
         <div>
           <Link style={{ margin: 5 }} to={`/marketplace/edit/${listingId}`}>
