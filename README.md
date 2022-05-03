@@ -15,4 +15,6 @@ keywords into the search bar. The marketplace listings are oriented by newest fi
 and liked listing show up in the feed and in details with a filled in star icon.
 
 ## Future Components
-  Future components include lining cloudinary for listing photos.
+  Future components include lining cloudinary for listing photos. Users will also be able to add attributes to each listing that will be searchable including vehicle 
+  model as well as scale. Users will also be able to send messages to other users to arrange parts sales and trades. The final feature will be the ability to follow 
+  other users and see a curated feed of those users new listings on the home page when logged in 
