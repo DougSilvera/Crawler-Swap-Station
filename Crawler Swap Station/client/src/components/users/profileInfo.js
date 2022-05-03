@@ -28,6 +28,8 @@ const ProfileInfo = () => {
   }, []);
   return (
     <div>
+        <div className="profileTopRow">
+
       <Card className="text-center">
         <CardHeader>My Details</CardHeader>
         <CardBody>
@@ -62,7 +64,7 @@ const ProfileInfo = () => {
                  </thead>
                  <tbody>
                      {userListings.map((listing, i) => {
-                         return <tr>
+                         return <tr key={`${listing.id}`}>
                              <th scope="row">{i+1}</th>
                              <td><Link to={`/marketplace/listingDetail/${listing.id}`}>{listing.title}</Link></td>
                              <td>$ {listing.price}</td>
@@ -73,7 +75,8 @@ const ProfileInfo = () => {
              </Table> 
           </CardBody>
       </Card>    
-      <Card>
+        </div>
+      <Card style={{margin: 25}}>
           <CardHeader>My Favorites</CardHeader>
           <CardBody>
              <Table>
@@ -99,7 +102,7 @@ const ProfileInfo = () => {
                  </thead>
                  <tbody>
                      {userFavoriteListings.map((listing, i) => {
-                         return <tr>
+                         return <tr key={`${listing.id}`}>
                              <th scope="row">{i+1}</th>
                              <td><Link to={`/marketplace/listingDetail/${listing.id}`}>{listing.title}</Link></td>
                              <td>{listing.userProfile?.displayName}</td>
