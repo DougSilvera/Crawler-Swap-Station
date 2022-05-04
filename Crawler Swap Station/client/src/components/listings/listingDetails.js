@@ -7,7 +7,10 @@ import {
   CardSubtitle,
   CardText,
   CardTitle,
-  Alert,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import {
   getListingById,
@@ -23,6 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { addFavorite, deleteFavorite } from "../../modules/favoriteManager";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ListingDetail = () => {
   const history = useHistory();
@@ -54,7 +58,7 @@ const ListingDetail = () => {
 
   const displayButtons = (userId, listingUserId, listingId) => {
     if (userFavorite === null) {
-      return null
+      return null;
     } else if (userId === listingUserId) {
       return (
         <div>
@@ -80,29 +84,6 @@ const ListingDetail = () => {
     });
   };
 
-  const deleteAlertBox = () => {
-    if (deleteAlert === true) {
-      return (
-        <div>
-          <Alert color="primary">
-            Hey! Are you sure you want to delete this ad?
-          </Alert>
-          <Button style={{ margin: 5 }} onClick={handleDelete}>
-            Yes!
-          </Button>
-          <Button
-            onClick={(evt) => {
-              setDeleteAlert(false);
-            }}
-          >
-            No go back!
-          </Button>
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
-  };
   const handleAddFavorite = (evt) => {
     evt.preventDefault();
     addFavorite(evt.target.id).then(() => {
@@ -118,7 +99,7 @@ const ListingDetail = () => {
   };
   const favoriteDisplay = (favorite) => {
     if (favorite === null) {
-      return null
+      return null;
     } else if (favorite.listingId === listing.id) {
       return (
         <div>
@@ -146,7 +127,30 @@ const ListingDetail = () => {
   };
   return (
     <div>
-      {deleteAlertBox()}
+      <div>
+        <Modal isOpen={deleteAlert}>
+          <ModalHeader
+            toggle={(evt) => {
+              setDeleteAlert(false);
+            }}
+          >
+            Hey You!
+          </ModalHeader>
+          <ModalBody>Are you sure you want to delete this ad?</ModalBody>
+          <ModalFooter>
+            <Button style={{ margin: 5 }} onClick={handleDelete}>
+              Yes!
+            </Button>
+            <Button
+              onClick={(evt) => {
+                setDeleteAlert(false);
+              }}
+            >
+              No go back!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </div>
       <Card style={{ width: "%80" }}>
         <CardBody>
           {favoriteDisplay(userFavorite)}
