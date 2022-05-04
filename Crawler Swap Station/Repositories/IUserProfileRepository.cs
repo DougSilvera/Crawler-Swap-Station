@@ -6,5 +6,6 @@ namespace Crawler_Swap_Station.Repositories
     {
         void Add(UserProfile userProfile);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
+        public UserProfile GetUserProfileById(int id);
     }
 }

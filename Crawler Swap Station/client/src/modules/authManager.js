@@ -13,9 +13,9 @@ const _doesUserExist = (firebaseUserId) => {
     }).then((resp) => resp.ok)
   );
 };
-export const getByFireId = (firebaseUserId) => {
+export const getLoggedInUser = () => {
   return getToken().then((token) =>
-    fetch(`${_apiUrl}/${firebaseUserId}`, {
+    fetch(`${_apiUrl}/loggedInUser`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

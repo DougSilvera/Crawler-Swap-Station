@@ -16,9 +16,8 @@ import {
   getListingById,
   getUserFavoriteListing,
 } from "../../modules/listingManager";
-import firebase from "firebase/app";
 import "firebase/auth";
-import { getByFireId } from "../../modules/authManager";
+import { getLoggedInUser } from "../../modules/authManager";
 import { Link } from "react-router-dom";
 import { deleteListing } from "../../modules/listingManager";
 import { useHistory } from "react-router-dom";
@@ -36,7 +35,6 @@ const ListingDetail = () => {
   const { id } = useParams();
   const [userFavorite, setUserFavorite] = useState(null);
   const [render, setRender] = useState(1);
-  const currentUser = firebase.auth().currentUser;
 
   const getListing = (listingId) => {
     getListingById(listingId).then((l) => setListing(l));
@@ -46,15 +44,15 @@ const ListingDetail = () => {
     getUserFavoriteListing(listingId).then((d) => setUserFavorite(d));
   };
 
-  const getUserLoggedIn = (uid) => {
-    getByFireId(uid).then((d) => setUserProfile(d));
+  const getUserLoggedIn = () => {
+    getLoggedInUser().then((d) => setUserProfile(d));
   };
 
   useEffect(() => {
-    getUserLoggedIn(currentUser.uid);
+    getUserLoggedIn();
     getListing(id);
     getUserFavorites(id);
-  }, [currentUser.uid, id, render]);
+  }, [id, render]);
 
   const displayButtons = (userId, listingUserId, listingId) => {
     if (userFavorite === null) {
