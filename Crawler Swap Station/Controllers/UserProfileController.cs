@@ -53,7 +53,7 @@ namespace Crawler_Swap_Station.Controllers
         public IActionResult GetLoggedInUser()
         {
             UserProfile userProfile = GetCurrentUserProfile();
-            return Ok(_userProfileRepository.GetByFirebaseUserId(userProfile.FirebaseUserId));
+            return Ok(_userProfileRepository.GetUserProfileById(userProfile.Id));
         }
         private UserProfile GetCurrentUserProfile()
         {
