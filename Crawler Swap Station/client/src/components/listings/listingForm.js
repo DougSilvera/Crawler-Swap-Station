@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { addListing } from "../../modules/listingManager";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import ImageUploader from "./listingImage";
+import { uploadImageToCloudinary } from "../../modules/imageManager";
 
 const ListingForm = () => {
   const history = useHistory();
@@ -11,6 +13,8 @@ const ListingForm = () => {
     price: "",
   };
   const [listing, setListing] = useState(emptyPost);
+  const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState([])
   const handleInputChange = (evt) => {
     const value = evt.target.value;
     const key = evt.target.id;
@@ -27,7 +31,54 @@ const ListingForm = () => {
     });
   };
 
+  const uploadImage = async e => {
+    e.preventDefault();
+    const image = {
+      listingId: "",
+      imageUrl: ""
+    }
+    const files = e.target.files
+    const data = new FormData()
+    data.append('file', files[0])
+    data.append('upload_preset', 'CrawlerSwapStation')
+    setLoading(true)
+   
+    const res = await uploadImageToCloudinary(data)
+    const file = await res.json();
+    image.imageUrl=file.secure_url;
+    const imagesCopy = [...images]
+    imagesCopy.push(image)
+    setImages(imagesCopy)
+    setLoading(false)
+
+    
+
+  }
+
+  // const imageDisplay = () => {
+  //   images.map((image) => {
+  //     return (
+  //       <img src={image.imageUrl} style={{width: '300px'}}/>
+  //     )
+  //   })
+  // }
+  const imageLoader = () => {
+    if (loading === true) {
+      return <h3>Loading....</h3>
+    } else {
+      return images.map((image,i) => {
+        return <img key={i+1} src={image.imageUrl} style={{width: '300px'}}/>
+      })
+    }
+  }
+
   return (
+    <>
+    <div>
+    {imageLoader()}
+
+    </div>
+    <ImageUploader uploadImage={uploadImage} />
     <Form>
       <FormGroup>
         <Label for="title">Title</Label>
@@ -66,6 +117,7 @@ const ListingForm = () => {
         Submit
       </Button>
     </Form>
+    </>
   );
 };
 export default ListingForm;
