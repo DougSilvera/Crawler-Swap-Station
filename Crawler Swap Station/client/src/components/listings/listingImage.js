@@ -1,5 +1,4 @@
 import React from "react";
-import { Input } from "reactstrap";
 
 const ImageUploader = ({uploadImage}) => {
     return (

@@ -32,3 +32,22 @@ export const addImageCssDb = (imageInfo) => {
       });
     });
   };
+
+  export const getImagesByListingId = (id) => {
+    return getToken().then((token) => {
+      return fetch(`${_apiUrl}/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.json();
+        } else if (resp.status === 204) {
+            return [];
+        } else {
+          throw new Error("An error occurred retrieving images");
+        }
+      });
+    });
+  };

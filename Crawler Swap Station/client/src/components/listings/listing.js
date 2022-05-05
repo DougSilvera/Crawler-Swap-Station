@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
@@ -6,12 +6,24 @@ import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { addFavorite, deleteFavorite } from "../../modules/favoriteManager";
 
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import { getImagesByListingId } from "../../modules/imageManager";
 
 const Listing = ({ listing, userFavorites, render, setRender }) => {
+  const [images, setImages] = useState([]);
+
+  const getImages = (listingId) => {
+    getImagesByListingId(listingId).then((d) => setImages(d))
+  }
+
+  
+
+  useEffect(() => {
+    getImages(listing.id)
+  }, [listing.id])
   const userFavorite = userFavorites.find(
     (favorite) => favorite.listingId === listing.id
   );
-
+  const image = images[0]
   const handleAddFavorite = (evt) => {
     evt.preventDefault();
     addFavorite(listing.id).then(() => {
@@ -45,14 +57,28 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
       );
     }
   };
+
+  const imageDisplay = () => {
+    if (image) {
+      return (
+        <img src={`${image?.imageUrl}`} alt="listing" style={{ width: "150px" }}/>
+      )
+    } else {
+      return (
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" alt="listing" style={{ width: "150px" }}/>
+      )
+    }
+  }
+  
   return (
-    <Card style={{ height: 200 }} key={listing.id}>
+    <Card style={{ height: 350 }} key={listing.id}>
       <CardBody>
         <CardTitle>
-          <Link to={`/marketplace/listingDetail/${listing.id}`}>
+        {imageDisplay()}
+          </CardTitle>
+          <CardSubtitle><Link to={`/marketplace/listingDetail/${listing.id}`}>
             {listing.title}
-          </Link>
-        </CardTitle>
+          </Link></CardSubtitle>
         <CardSubtitle>${listing.price}</CardSubtitle>
         <CardText>{listing.body}</CardText>
         {favoriteDisplay()}
