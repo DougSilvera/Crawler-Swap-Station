@@ -12,18 +12,16 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
   const [images, setImages] = useState([]);
 
   const getImages = (listingId) => {
-    getImagesByListingId(listingId).then((d) => setImages(d))
-  }
-
-  
+    getImagesByListingId(listingId).then((d) => setImages(d));
+  };
 
   useEffect(() => {
-    getImages(listing.id)
-  }, [listing.id])
+    getImages(listing.id);
+  }, [listing.id]);
   const userFavorite = userFavorites.find(
     (favorite) => favorite.listingId === listing.id
   );
-  const image = images[0]
+  const image = images[0];
   const handleAddFavorite = (evt) => {
     evt.preventDefault();
     addFavorite(listing.id).then(() => {
@@ -48,11 +46,7 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
     } else {
       return (
         <div>
-          <FontAwesomeIcon
-            
-            onClick={handleAddFavorite}
-            icon={faStar}
-          />
+          <FontAwesomeIcon onClick={handleAddFavorite} icon={faStar} />
         </div>
       );
     }
@@ -61,24 +55,32 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
   const imageDisplay = () => {
     if (image) {
       return (
-        <img src={`${image?.imageUrl}`} alt="listing" style={{ width: "150px" }}/>
-      )
+        <img
+          src={`${image?.imageUrl}`}
+          alt="listing"
+          style={{ width: "150px" }}
+        />
+      );
     } else {
       return (
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" alt="listing" style={{ width: "150px" }}/>
-      )
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+          alt="listing"
+          style={{ width: "150px" }}
+        />
+      );
     }
-  }
-  
+  };
+
   return (
     <Card style={{ height: 350 }} key={listing.id}>
       <CardBody>
-        <CardTitle>
-        {imageDisplay()}
-          </CardTitle>
-          <CardSubtitle><Link to={`/marketplace/listingDetail/${listing.id}`}>
+        <CardTitle>{imageDisplay()}</CardTitle>
+        <CardSubtitle>
+          <Link to={`/marketplace/listingDetail/${listing.id}`}>
             {listing.title}
-          </Link></CardSubtitle>
+          </Link>
+        </CardSubtitle>
         <CardSubtitle>${listing.price}</CardSubtitle>
         <CardText>{listing.body}</CardText>
         {favoriteDisplay()}

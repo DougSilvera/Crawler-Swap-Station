@@ -4,6 +4,7 @@ import { addListing } from "../../modules/listingManager";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import ImageUploader from "./listingImage";
 import { addImageCssDb, uploadImageToCloudinary } from "../../modules/imageManager";
+import { Carousel, CarouselItem } from "react-bootstrap";
 const ListingForm = () => {
   const history = useHistory();
   const emptyPost = {
@@ -59,12 +60,27 @@ const ListingForm = () => {
     if (loading === true) {
       return <h3>Loading....</h3>;
     } else {
-      return images.map((image, i) => {
-        return (
-          <img key={i + 1} src={image.imageUrl} style={{ width: "300px" }} alt="listing" />
-        );
-      });
-    }
+      return (
+        <div className="pictureCarousel">
+        <Carousel variant={"dark"} interval = {null} style={{ width: "1000px" }}>
+          {images.map((image) => {
+            return <CarouselItem>
+              
+              <img className="d-block w-100"
+                   src={`${image.imageUrl}`}
+                   alt="slide" 
+                   />
+  
+            
+            </CarouselItem>
+          })}
+        </Carousel>
+  
+        </div>
+        
+        ) 
+       
+      }
   };
 
   return (

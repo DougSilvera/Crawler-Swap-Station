@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.toolButton {
+.toolButton, .pictureCarousel {
   display: flex;
   justify-content: center;
 

@@ -27,6 +27,7 @@ import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { addFavorite, deleteFavorite } from "../../modules/favoriteManager";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getImagesByListingId } from "../../modules/imageManager";
+import { Carousel, CarouselItem } from "react-bootstrap";
 
 const ListingDetail = () => {
   const history = useHistory();
@@ -159,7 +160,22 @@ const ListingDetail = () => {
       </div>
       <Card style={{ width: "%80" }}>
         <CardBody>
-          
+          <div className="pictureCarousel">
+          <Carousel variant={"dark"} interval = {null} style={{ width: "1000px" }}>
+            {images.map((image) => {
+              return <CarouselItem>
+                
+                <img className="d-block w-100"
+                     src={`${image.imageUrl}`}
+                     alt="slide" 
+                     />
+
+              
+              </CarouselItem>
+            })}
+          </Carousel>
+
+          </div>
           {favoriteDisplay(userFavorite)}
           <CardTitle>{listing.title}</CardTitle>
           <CardSubtitle>${listing.price}</CardSubtitle>
