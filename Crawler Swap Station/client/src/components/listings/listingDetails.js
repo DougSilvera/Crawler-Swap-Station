@@ -26,6 +26,7 @@ import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { addFavorite, deleteFavorite } from "../../modules/favoriteManager";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getImagesByListingId } from "../../modules/imageManager";
 
 const ListingDetail = () => {
   const history = useHistory();
@@ -35,6 +36,7 @@ const ListingDetail = () => {
   const { id } = useParams();
   const [userFavorite, setUserFavorite] = useState(null);
   const [render, setRender] = useState(1);
+  const [images, setImages] = useState([])
 
   const getListing = (listingId) => {
     getListingById(listingId).then((l) => setListing(l));
@@ -48,10 +50,15 @@ const ListingDetail = () => {
     getLoggedInUser().then((d) => setUserProfile(d));
   };
 
+  const getImages = (listingId) => {
+    getImagesByListingId(listingId).then((d) => setImages(d))
+  }
+
   useEffect(() => {
     getUserLoggedIn();
     getListing(id);
     getUserFavorites(id);
+    getImages(id);
   }, [id, render]);
 
   const displayButtons = (userId, listingUserId, listingId) => {
@@ -123,6 +130,7 @@ const ListingDetail = () => {
       );
     }
   };
+
   return (
     <div>
       <div>
@@ -151,6 +159,7 @@ const ListingDetail = () => {
       </div>
       <Card style={{ width: "%80" }}>
         <CardBody>
+          
           {favoriteDisplay(userFavorite)}
           <CardTitle>{listing.title}</CardTitle>
           <CardSubtitle>${listing.price}</CardSubtitle>
