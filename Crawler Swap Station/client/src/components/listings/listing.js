@@ -58,7 +58,7 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
         <img
           src={`${image?.imageUrl}`}
           alt="listing"
-          style={{ width: "150px" }}
+          style={{ width: "250px" }}
         />
       );
     } else {
@@ -73,16 +73,16 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
   };
 
   return (
-    <Card style={{ height: 350 }} key={listing.id}>
+    <Card style={{ height: 350, width: "28%", margin: "10px" }} key={listing.id}>
       <CardBody>
-        <CardTitle>{imageDisplay()}</CardTitle>
+        <CardTitle className="listingImage">{imageDisplay()}</CardTitle>
         <CardSubtitle>
           <Link to={`/marketplace/listingDetail/${listing.id}`}>
             {listing.title}
           </Link>
         </CardSubtitle>
-        <CardSubtitle>${listing.price}</CardSubtitle>
-        <CardText>{listing.body}</CardText>
+        <CardSubtitle>Price: ${listing.price}</CardSubtitle>
+        <CardText className="listingBody"><text className="listingText" >Description: {listing.body}</text></CardText>
         {favoriteDisplay()}
       </CardBody>
     </Card>
