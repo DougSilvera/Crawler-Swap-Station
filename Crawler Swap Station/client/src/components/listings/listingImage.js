@@ -2,7 +2,7 @@ import React from "react";
 
 const ImageUploader = ({ uploadImage }) => {
   return (
-    <div>
+    <div className="imageLoader">
       <input
         type="file"
         name="file"

@@ -58,7 +58,7 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
         <img
           src={`${image?.imageUrl}`}
           alt="listing"
-          style={{ width: "250px" }}
+          style={{  height: "200px" }}
         />
       );
     } else {
@@ -66,7 +66,7 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
           alt="listing"
-          style={{ width: "150px" }}
+          style={{ height: "150px" }}
         />
       );
     }

@@ -91,7 +91,9 @@ const ListingForm = () => {
     <>
       <div>{imageLoader()}</div>
       <ImageUploader uploadImage={uploadImage} />
-      <Form>
+      <div className="inputForm" >
+
+      <Form style={{width: "70%"}}>
         <FormGroup>
           <Label for="title">Title</Label>
           <Input
@@ -129,6 +131,7 @@ const ListingForm = () => {
           Submit
         </Button>
       </Form>
+      </div>
     </>
   );
 };
