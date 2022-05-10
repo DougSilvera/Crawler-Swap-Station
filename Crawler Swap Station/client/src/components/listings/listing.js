@@ -73,7 +73,10 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
   };
 
   return (
-    <Card style={{ height: 350, width: "28%", margin: "10px" }} key={listing.id}>
+    <Card
+      style={{ height: 350, width: "28%", margin: "10px" }}
+      key={listing.id}
+    >
       <CardBody>
         <CardTitle className="listingImage">{imageDisplay()}</CardTitle>
         <CardSubtitle>
@@ -82,7 +85,9 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
           </Link>
         </CardSubtitle>
         <CardSubtitle>Price: ${listing.price}</CardSubtitle>
-        <CardText className="listingBody"><text className="listingText" >Description: {listing.body}</text></CardText>
+        <CardText className="listingBody">
+          <text className="listingText">Description: {listing.body}</text>
+        </CardText>
         {favoriteDisplay()}
       </CardBody>
     </Card>
