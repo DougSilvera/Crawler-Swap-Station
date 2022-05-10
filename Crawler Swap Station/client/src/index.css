@@ -12,16 +12,30 @@ code {
     monospace;
 }
 
-.toolButton {
+.toolButton, .pictureCarousel, .listingImage, .searchBar {
   display: flex;
   justify-content: center;
 
 }
-.openToolbarButtons {
+.openToolbarButtons, .listingRow {
   display: flex;
   justify-content: space-evenly;
 }
 .profileTopRow {
   display: flex;
   justify-content: space-around;
+}
+.listingBody {
+  display: flex;
+  flex-wrap: wrap;
+}
+.listingText {
+  
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+ 
 }
