@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.toolButton, .pictureCarousel, .listingImage, .searchBar, .inputForm, .imageLoader, .profileBottomRow {
+.toolButton, .pictureCarousel, .listingImage, .searchBar, .inputForm, .imageLoader, .profileBottomRow, .listingDetailBody, .detailsCard {
   display: flex;
   justify-content: center;
 
@@ -42,4 +42,10 @@ code {
 
 .myListingTable {
   overflow-y: scroll;
+}
+img {
+  max-height: 600px;
+  max-width: 600px;
+  width: auto;
+  height: auto;
 }

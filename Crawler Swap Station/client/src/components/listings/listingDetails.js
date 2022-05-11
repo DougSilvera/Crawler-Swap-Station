@@ -158,14 +158,12 @@ const ListingDetail = () => {
           </ModalFooter>
         </Modal>
       </div>
+      <div className="detailsCard" style={{width: "100%"}}>
+
       <Card style={{ width: "%80" }}>
         <CardBody>
           <div className="pictureCarousel">
-            <Carousel
-              variant={"dark"}
-              interval={null}
-              style={{ width: "1000px" }}
-            >
+            <Carousel variant={"dark"} interval={null}>
               {images.map((image) => {
                 return (
                   <CarouselItem>
@@ -179,18 +177,23 @@ const ListingDetail = () => {
               })}
             </Carousel>
           </div>
-          {favoriteDisplay(userFavorite)}
-          <CardTitle>{listing.title}</CardTitle>
-          <CardSubtitle>${listing.price}</CardSubtitle>
-          <CardSubtitle>
-            Seller: {listing.userProfile?.displayName}
-          </CardSubtitle>
-          <CardSubtitle>Date Listed: {listing.dateCreated}</CardSubtitle>
-          <CardText>{listing.body}</CardText>
+          <div className="listingDetailBody">
+            <div>
+              {favoriteDisplay(userFavorite)}
+              <CardTitle>{listing.title}</CardTitle>
+              <CardSubtitle>${listing.price}</CardSubtitle>
+              <CardSubtitle>
+                Seller: {listing.userProfile?.displayName}
+              </CardSubtitle>
+              <CardSubtitle>Date Listed: {listing.dateCreated}</CardSubtitle>
+              <CardText>{listing.body}</CardText>
 
-          {displayButtons(userProfile.id, listing.userId, listing.id)}
+              {displayButtons(userProfile.id, listing.userId, listing.id)}
+            </div>
+          </div>
         </CardBody>
       </Card>
+      </div>
     </div>
   );
 };
