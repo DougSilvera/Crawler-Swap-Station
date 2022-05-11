@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.toolButton, .pictureCarousel, .listingImage, .searchBar, .inputForm, .imageLoader {
+.toolButton, .pictureCarousel, .listingImage, .searchBar, .inputForm, .imageLoader, .profileBottomRow {
   display: flex;
   justify-content: center;
 
@@ -38,4 +38,8 @@ code {
             line-clamp: 2; 
     -webkit-box-orient: vertical;
  
+}
+
+.myListingTable {
+  overflow-y: scroll;
 }

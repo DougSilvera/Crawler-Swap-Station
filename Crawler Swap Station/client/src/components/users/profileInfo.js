@@ -34,8 +34,8 @@ const ProfileInfo = () => {
     getUserFavoritelistingArray();
   }, []);
   return (
-    <div>
-      <div className="profileTopRow">
+    <div style={{margin: 20}}>
+      <div className="profileTopRow" style={{height: "300px"}} >
         <Card className="text-center">
           <CardHeader>My Details</CardHeader>
           <CardBody>
@@ -49,10 +49,10 @@ const ProfileInfo = () => {
             </ListGroup>
           </CardBody>
         </Card>
-        <Card>
+        <Card  className="myListingTable">
           <CardHeader>My Listings</CardHeader>
-          <CardBody>
-            <Table>
+          <CardBody style={{heigth: 50}}>
+            <Table className="myListingTable">
               <thead>
                 <tr>
                   <th>#</th>
@@ -61,7 +61,7 @@ const ProfileInfo = () => {
                   <th>Date Listed</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody  className="myListingTable">
                 {userListings.map((listing, i) => {
                   return (
                     <tr key={`${listing.id}`}>
@@ -81,7 +81,9 @@ const ProfileInfo = () => {
           </CardBody>
         </Card>
       </div>
-      <Card style={{ margin: 25 }}>
+      <div className="profileBottomRow">
+
+      <Card style={{ margin: 25, width: "80%" }}>
         <CardHeader>My Favorites</CardHeader>
         <CardBody>
           <Table>
@@ -114,6 +116,7 @@ const ProfileInfo = () => {
           </Table>
         </CardBody>
       </Card>
+      </div>
     </div>
   );
 };
