@@ -37,7 +37,7 @@ const ListingDetail = () => {
   const { id } = useParams();
   const [userFavorite, setUserFavorite] = useState(null);
   const [render, setRender] = useState(1);
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState([]);
 
   const getListing = (listingId) => {
     getListingById(listingId).then((l) => setListing(l));
@@ -52,8 +52,8 @@ const ListingDetail = () => {
   };
 
   const getImages = (listingId) => {
-    getImagesByListingId(listingId).then((d) => setImages(d))
-  }
+    getImagesByListingId(listingId).then((d) => setImages(d));
+  };
 
   useEffect(() => {
     getUserLoggedIn();
@@ -158,36 +158,42 @@ const ListingDetail = () => {
           </ModalFooter>
         </Modal>
       </div>
+      <div className="detailsCard" style={{width: "100%"}}>
+
       <Card style={{ width: "%80" }}>
         <CardBody>
           <div className="pictureCarousel">
-          <Carousel variant={"dark"} interval = {null} style={{ width: "1000px" }}>
-            {images.map((image) => {
-              return <CarouselItem>
-                
-                <img className="d-block w-100"
-                     src={`${image.imageUrl}`}
-                     alt="slide" 
-                     />
-
-              
-              </CarouselItem>
-            })}
-          </Carousel>
-
+            <Carousel variant={"dark"} interval={null}>
+              {images.map((image) => {
+                return (
+                  <CarouselItem>
+                    <img
+                      className="d-block w-100"
+                      src={`${image.imageUrl}`}
+                      alt="slide"
+                    />
+                  </CarouselItem>
+                );
+              })}
+            </Carousel>
           </div>
-          {favoriteDisplay(userFavorite)}
-          <CardTitle>{listing.title}</CardTitle>
-          <CardSubtitle>${listing.price}</CardSubtitle>
-          <CardSubtitle>
-            Seller: {listing.userProfile?.displayName}
-          </CardSubtitle>
-          <CardSubtitle>Date Listed: {listing.dateCreated}</CardSubtitle>
-          <CardText>{listing.body}</CardText>
+          <div className="listingDetailBody">
+            <div>
+              {favoriteDisplay(userFavorite)}
+              <CardTitle>{listing.title}</CardTitle>
+              <CardSubtitle>${listing.price}</CardSubtitle>
+              <CardSubtitle>
+                Seller: {listing.userProfile?.displayName}
+              </CardSubtitle>
+              <CardSubtitle>Date Listed: {listing.dateCreated}</CardSubtitle>
+              <CardText>{listing.body}</CardText>
 
-          {displayButtons(userProfile.id, listing.userId, listing.id)}
+              {displayButtons(userProfile.id, listing.userId, listing.id)}
+            </div>
+          </div>
         </CardBody>
       </Card>
+      </div>
     </div>
   );
 };

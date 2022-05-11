@@ -3,7 +3,7 @@ import React from "react";
 import { FormGroup, Input, Button } from "reactstrap";
 import { SearchListings } from "../../modules/listingManager";
 
-const ListingSearch = ({setListings}) => {
+const ListingSearch = ({ setListings }) => {
   const [query, setQuery] = useState("");
 
   const handleInputChange = (evt) => {

@@ -3,7 +3,10 @@ import { useHistory } from "react-router-dom";
 import { addListing } from "../../modules/listingManager";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import ImageUploader from "./listingImage";
-import { addImageCssDb, uploadImageToCloudinary } from "../../modules/imageManager";
+import {
+  addImageCssDb,
+  uploadImageToCloudinary,
+} from "../../modules/imageManager";
 import { Carousel, CarouselItem } from "react-bootstrap";
 const ListingForm = () => {
   const history = useHistory();
@@ -24,15 +27,15 @@ const ListingForm = () => {
     listingCopy[key] = value;
     setListing(listingCopy);
   };
-  const handleSave = async evt => {
-    debugger
+  const handleSave = async (evt) => {
+    debugger;
     evt.preventDefault();
-    const listingresponse = await addListing(listing)
-    images.forEach(image => {
-      image.listingId = listingresponse.id
-      addImageCssDb(image)
+    const listingresponse = await addListing(listing);
+    images.forEach((image) => {
+      image.listingId = listingresponse.id;
+      addImageCssDb(image);
     });
-    history.push("/marketplace")
+    history.push("/marketplace");
   };
 
   const uploadImage = async (e) => {
@@ -62,32 +65,35 @@ const ListingForm = () => {
     } else {
       return (
         <div className="pictureCarousel">
-        <Carousel variant={"dark"} interval = {null} style={{ width: "1000px" }}>
-          {images.map((image) => {
-            return <CarouselItem>
-              
-              <img className="d-block w-100"
-                   src={`${image.imageUrl}`}
-                   alt="slide" 
-                   />
-  
-            
-            </CarouselItem>
-          })}
-        </Carousel>
-  
+          <Carousel
+            variant={"dark"}
+            interval={null}
+            style={{ width: "1000px" }}
+          >
+            {images.map((image) => {
+              return (
+                <CarouselItem>
+                  <img
+                    className="d-block w-100"
+                    src={`${image.imageUrl}`}
+                    alt="slide"
+                  />
+                </CarouselItem>
+              );
+            })}
+          </Carousel>
         </div>
-        
-        ) 
-       
-      }
+      );
+    }
   };
 
   return (
     <>
       <div>{imageLoader()}</div>
       <ImageUploader uploadImage={uploadImage} />
-      <Form>
+      <div className="inputForm" >
+
+      <Form style={{width: "70%"}}>
         <FormGroup>
           <Label for="title">Title</Label>
           <Input
@@ -125,6 +131,7 @@ const ListingForm = () => {
           Submit
         </Button>
       </Form>
+      </div>
     </>
   );
 };

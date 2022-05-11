@@ -39,7 +39,9 @@ const ListingEdit = () => {
   };
 
   return (
-    <Form>
+    <div className="inputForm">
+
+    <Form style={{width: "70%"}}>
       <FormGroup>
         <Label for="title">Title</Label>
         <Input
@@ -74,6 +76,7 @@ const ListingEdit = () => {
         Submit
       </Button>
     </Form>
+    </div>
   );
 };
 export default ListingEdit;

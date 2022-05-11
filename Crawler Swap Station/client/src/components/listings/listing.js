@@ -58,7 +58,7 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
         <img
           src={`${image?.imageUrl}`}
           alt="listing"
-          style={{ width: "250px" }}
+          style={{  height: "200px" }}
         />
       );
     } else {
@@ -66,14 +66,17 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
           alt="listing"
-          style={{ width: "150px" }}
+          style={{ height: "150px" }}
         />
       );
     }
   };
 
   return (
-    <Card style={{ height: 350, width: "28%", margin: "10px" }} key={listing.id}>
+    <Card
+      style={{ height: 350, width: "28%", margin: "10px" }}
+      key={listing.id}
+    >
       <CardBody>
         <CardTitle className="listingImage">{imageDisplay()}</CardTitle>
         <CardSubtitle>
@@ -82,7 +85,9 @@ const Listing = ({ listing, userFavorites, render, setRender }) => {
           </Link>
         </CardSubtitle>
         <CardSubtitle>Price: ${listing.price}</CardSubtitle>
-        <CardText className="listingBody"><text className="listingText" >Description: {listing.body}</text></CardText>
+        <CardText className="listingBody">
+          <text className="listingText">Description: {listing.body}</text>
+        </CardText>
         {favoriteDisplay()}
       </CardBody>
     </Card>
